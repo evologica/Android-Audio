@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RecordButton">
+        <attr name="swipeDistance" format="dimension"/>
+        <attr name="swipeDuration" format="integer"/>
+        <attr name="scaleDuration" format="integer"/>
+        <attr name="grow" format="float"/>
+        <attr name="shrink" format="float"/>
+        <attr name="vibrate">
+            <flag name="none" value="0"/>
+            <flag name="start" value="1"/>
+            <flag name="stop" value="2"/>
+            <flag name="delete" value="4"/>
+        </attr>
+        <attr name="vibrateDuration" format="integer"/>
+    </declare-styleable>
+</resources>

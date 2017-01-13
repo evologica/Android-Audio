@@ -1,4 +1,4 @@
-package br.com.evologica.audio;
+package br.com.evologica.audio.sample;
 
 import org.junit.Test;
 

@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("br.com.evologica.recordbutton", appContext.getPackageName());
+        assertEquals("br.com.evologica.audio.test", appContext.getPackageName());
     }
 }
