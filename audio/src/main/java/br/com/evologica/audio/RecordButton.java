@@ -17,8 +17,11 @@ public class RecordButton extends FloatingActionButton implements View.OnTouchLi
     private static final int VIBRATE_START = 1;
     private static final int VIBRATE_STOP = 2;
     private static final int VIBRATE_DELETE = 4;
+    private static final int RTL = 0;
+    private static final int LTR = 1;
 
     private int mScaleDuration = 200;
+    private int mSwipeDirection = RTL;
     private float mGrow = 2;
     private float mShrink = 1;
     private int mSwipeDuration = 200;
@@ -57,6 +60,7 @@ public class RecordButton extends FloatingActionButton implements View.OnTouchLi
             mSwipeDistance = attributes.getDimensionPixelSize(R.styleable.RecordButton_swipeDistance, -1);
             mVibrate = attributes.getInteger(R.styleable.RecordButton_vibrate, VIBRATE_START + VIBRATE_STOP + VIBRATE_DELETE);
             mVibrateDuration = attributes.getInt(R.styleable.RecordButton_vibrateDuration, 100);
+            mSwipeDirection = attributes.getInt(R.styleable.RecordButton_swipeDirection, RTL);
         } finally {
             attributes.recycle();
         }
@@ -73,7 +77,8 @@ public class RecordButton extends FloatingActionButton implements View.OnTouchLi
             case MotionEvent.ACTION_MOVE: {
                 final float position = RecordButton.this.getTranslationX();
                 final float translation = position + motionEvent.getX() - width/2;
-                if (position > getSwipeDistance() && enabled) {
+                final float relativePosition = mSwipeDirection == RTL ? position : -position;
+                if (relativePosition > getSwipeDistance() && enabled) {
                     ObjectAnimator shrinkX = ObjectAnimator.ofFloat(RecordButton.this, "scaleX", mShrink);
                     ObjectAnimator shrinkY = ObjectAnimator.ofFloat(RecordButton.this, "scaleY", mShrink);
                     ObjectAnimator translateToOrigin = ObjectAnimator.ofFloat(RecordButton.this, "translationX", 0);
@@ -93,7 +98,10 @@ public class RecordButton extends FloatingActionButton implements View.OnTouchLi
                     });
                     shrink.start();
                 }
-                else if (enabled && position >= 0 && translation >= 0) RecordButton.this.setTranslationX(translation);
+                else if (enabled) {
+                    if (mSwipeDirection == RTL && translation >= 0) RecordButton.this.setTranslationX(translation);
+                    else if (mSwipeDirection == LTR && translation <= 0) RecordButton.this.setTranslationX(translation);
+                }
                 break;
             }
             case MotionEvent.ACTION_DOWN:{

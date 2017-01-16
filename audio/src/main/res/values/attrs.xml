@@ -12,6 +12,10 @@
             <flag name="stop" value="2"/>
             <flag name="delete" value="4"/>
         </attr>
+        <attr name="swipeDirection" format="enum">
+            <enum name="rtl" value="0"/>
+            <enum name="ltr" value="1"/>
+        </attr>
         <attr name="vibrateDuration" format="integer"/>
     </declare-styleable>
 </resources>
